@@ -30,6 +30,8 @@ function setTSP(ip , x)
     println("=======================")
     println("z  = ", objective_value(ip))
 
+    return(ip, x)
+
 end
 
 function matToPermut(x)
@@ -138,13 +140,14 @@ end
 
 B:
 
-cd Cours\Nantes\Optimisation\TP
+cd Cours\Nantes\Optimisation\TP\TSP-D
 
 julia
 
 include("main.jl")
- nom, pos, dist = loadLAP("doublecenter-51-n10.txt")
+ nom, pos, dist, vDrone, vCamion, nbrNode = loadLAP("doublecenter-51-n10.txt")
 ip, x = setLAP(1, dist)
+ip, x = setTSP(ip, x)
 
 
 =#

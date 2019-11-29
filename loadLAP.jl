@@ -14,7 +14,7 @@ function loadLAP(fname)
     vitesseDrone = parse(Float64, readline(f) )
     # lecture du nombre de nodes
     readline(f)
-    nbrNode =  parse(Int8, readline(f))
+    nbrNode =  parse(Int64, readline(f))
     #lecture de la position  et du noms des points
     noms = String[]
     position = Tuple{Float64,Float64}[]
@@ -42,7 +42,7 @@ function loadLAP(fname)
 
     distancier = calculDistancier(position)
     println(distancier)
-    return(noms, position, distancier)
+    return(noms, position, distancier, vitesseDrone, vitesseCamion, nbrNode)
 end
 
 
