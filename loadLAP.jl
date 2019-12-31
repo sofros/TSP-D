@@ -9,9 +9,13 @@ function loadLAP(fname)
     # lecture de la vitesse du camion
     readline(f)
     vitesseCamion = parse(Float64, readline(f) )
+    vitesseCamion = 1/vitesseCamion
+
     # lecture de la vitesse du drone
     readline(f)
     vitesseDrone = parse(Float64, readline(f) )
+    vitesseDrone = 1/vitesseDrone
+
     # lecture du nombre de nodes
     readline(f)
     nbrNode =  parse(Int64, readline(f))

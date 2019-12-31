@@ -8,7 +8,8 @@ using LinearAlgebra
 include("loadLAP.jl")
 include("setTSP.jl")
 include("setLAP.jl")
-include("solveTSPD.jl")
+#include("solveTSPD.jl")
+include("solveTSPD2.jl")
 
 
 
