@@ -41,11 +41,11 @@ function loadLAP(fname)
             nom = String(nom)
             push!(noms, nom)
         end
-        println("noms: ", noms, "   type: ", typeof(noms))
-        println("positions: ", position, "   type: ", typeof(position))
+        #println("noms: ", noms, "   type: ", typeof(noms))
+        #println("positions: ", position, "   type: ", typeof(position))
 
     distancier = calculDistancier(position)
-    println(distancier)
+    #println(distancier)
     return(noms, position, distancier, vitesseDrone, vitesseCamion, nbrNode)
 end
 

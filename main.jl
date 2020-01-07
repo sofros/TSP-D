@@ -8,31 +8,47 @@ using LinearAlgebra
 include("loadLAP.jl")
 include("setTSP.jl")
 include("setLAP.jl")
-#include("solveTSPD.jl")
-include("solveTSPD2.jl")
+include("solveTSPD.jl")
+include("getfname.jl")
 
 
 
-#=include("getfname.jl")
+function callTSPD(fnames)
+    for f in fnames
+        TSPD(f)
+    end
+end
 
-# =========================================================================== #
+function TSPD(fname)
+println("\n======================================================================")
+println("========= Calcul pour l'instance: ", fname, " ============")
+println("======================================================================")
+println("Mise en place du LAP:")
+    nom, pos, dist, vDrone, vCamion, nbrNode = loadLAP(fname)
+    ip, x = setLAP(1, dist)
 
-# Setting the data
-fname = "Desktop/solveSPP/Data/didactic.dat"  # path for a standard config on macOS
-cost, matrix = loadSPP(fname)
+println("\n Transphormation du LAP en TSP")
+    ip, x = setTSP(ip, x)
+    ordrePassage = ordonerPerm(x)
 
-# Proceeding to the optimization
-solverSelected = GLPK.Optimizer
-ip, ip_x = setSPP(solverSelected, cost, matrix)
-println("Solving..."); optimize!(ip)
 
-# Displaying the results
-println("z  = ", objective_value(ip))
-print("x  = "); println(value.(ip_x))
+# Debut du Partitionnement exacte
+    tempsOp = calculToutesOperation(dist, nbrNode, vDrone, vCamion, ordrePassage)
+    M, P = matriceMeilleurTemps(tempsOp, nbrNode)
+    M, P = voyageSimple(ordrePassage, dist, M, P)
+    A, B = plusCourtTemps(ordrePassage, M, P)
 
-# =========================================================================== #
+    synthèse(B, P, M, ordrePassage, vDrone, vCamion, A, fname, dist)
+    println("======================================================================")
+
+return(A,B)
+end
+
 
 # Collecting the names of instances to solve
-target = "Desktop/solveSPP/Data"            # path for a standard config on macOS
+target = "B:/Cours/Nantes/Optimisation/TP/TSP-D/Experimentation"  # path for a standard config on windows10
+dir = pwd()
+TSPD("init.txt")
 fnames = getfname(target)
-=#
+@time callTSPD(fnames)
+cd(dir)

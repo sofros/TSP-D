@@ -23,7 +23,7 @@ function setLAP(solverSelected, distancier)
 
     # Displaying the results
     println("z  = ", objective_value(ip))
-    print("x  = "); println(value.(x))
+    #print("x  = "); println(value.(x))
 
   return ip, x
 end

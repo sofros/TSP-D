@@ -21,7 +21,7 @@ function setTSP(ip , x)
         #detection des sous Cyles
         permut = matToPermut(x)
         sousCyles = getSousCyles(permut)
-        println("Nouveaux sous Cyles: ",sousCyles)
+        println("Sous Cyles: ",sousCyles)
         println("permut associé: ", permut)
         #println(ip)
         cpt += 1
@@ -146,17 +146,18 @@ cd Cours\Nantes\Optimisation\TP\TSP-D
 julia
 
 include("main.jl")
+f = "doublecenter-54-n10.txt"
 #nom, pos, dist, vDrone, vCamion, nbrNode = loadLAP("doublecenter-60-n10.txt")
-nom, pos, dist, vDrone, vCamion, nbrNode = loadLAP("doublecenter-51-n10.txt")
+nom, pos, dist, vDrone, vCamion, nbrNode = loadLAP(f)
 ip, x = setLAP(1, dist)
 ip, x = setTSP(ip, x)
 ordrePassage = ordonerPerm(x)
-vDrone = 4.0
+#vDrone = 4.0
 tempsOp = calculToutesOperation(dist, nbrNode, vDrone, vCamion, ordrePassage)
 M, P = matriceMeilleurTemps(tempsOp, nbrNode)
 M, P = voyageSimple(ordrePassage, dist, M, P)
 A, B = plusCourtTemps(ordrePassage, M, P)
-
+synthèse(B, P, M, ordrePassage, vDrone, vCamion, A, f)
 
 
 =#
