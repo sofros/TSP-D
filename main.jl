@@ -15,7 +15,7 @@ include("getfname.jl")
 
 function callTSPD(fnames)
     for f in fnames
-        TSPD(f)
+        @time TSPD(f)
     end
 end
 
@@ -34,21 +34,21 @@ println("\n Transphormation du LAP en TSP")
 
 # Debut du Partitionnement exacte
     tempsOp = calculToutesOperation(dist, nbrNode, vDrone, vCamion, ordrePassage)
-    M, P = matriceMeilleurTemps(tempsOp, nbrNode)
-    M, P = voyageSimple(ordrePassage, dist, M, P)
-    A, B = plusCourtTemps(ordrePassage, M, P)
+    tempsMin, valK = matriceMeilleurTemps(tempsOp, nbrNode)
+    tempsMin, valK = voyageSimple(ordrePassage, dist, tempsMin, valK)
+    V, P = meilleurSuiteOperation(ordrePassage, tempsMin, valK)
 
-    synthèse(B, P, M, ordrePassage, vDrone, vCamion, A, fname, dist)
+    synthèse(P, valK, tempsMin, ordrePassage, vDrone, vCamion, V, fname, dist)
     println("======================================================================")
 
-return(A,B)
+return(V, P)
 end
 
 
 # Collecting the names of instances to solve
-target = "B:/Cours/Nantes/Optimisation/TP/TSP-D/Experimentation"  # path for a standard config on windows10
 dir = pwd()
+target = string(dir,"/Experimentation")  # path for a standard config on windows10
 TSPD("init.txt")
 fnames = getfname(target)
-@time callTSPD(fnames)
+callTSPD(fnames)
 cd(dir)

@@ -35,7 +35,6 @@ function setTSP(ip , x)
 end
 
 function matToPermut(x)
-    #println("x:   ",x)
     n , m = size(x)
     permut = Array{Int64,1}(undef, n)
     for i in 1:n
@@ -66,28 +65,6 @@ function getSousCyles(permut)
     end
 
     return(sousCyles)
-    #=
-    sousCyles = []
-    S = deepcopy(permut)
-    stop = []
-    while S != stop
-        i = S[1]
-#        println("i: ", i)
-        sousCyleActuel = [i]
-        j = permut[i]
-#        println("j:  ", j)
-        deleteat!(S, getPos(S,i))
-        while j != i
-            push!(sousCyleActuel, j)
-            deleteat!(S, getPos(S,j))
-            j = permut[j]
-#            println("j:  ", j)
-        end
-        push!(sousCyles, sousCyleActuel)
-#        println("sTA: ", sousCyleActuel, "   sT: ", sousCyles)
-    end
-    return(sousCyles)
-    =#
 end
 
 function getPos(liste, x)
@@ -118,46 +95,3 @@ function ajoutContrainte(ip, x, sousCycles)
         end
         return ip, x
 end
-
-#=
-function ajoutContrainte(ip, x, sousCyles)
-    println("Ajout contraites: ")
-    for k in 1:length(sousCyles)
-        taille = length(sousCyles[k])
-        @constraint(ip , [i=sousCyles[k]], sum(x[i,j]+x[j,i] for j=sousCyles[k]) <= taille-1)
-        println("contrainte ", k, " ajouté!")
-    end
-    return ip, x
-end
-
-=#
-#=
-b= [3, 4, 1, 5, 2]
-b = [6, 5, 4, 3, 2, 1, 7, 8]
-for i in b
-    println(b[1], "  taille: ", length(b))
-    popfirst!(b)
-end
-
-B:
-
-cd Cours\Nantes\Optimisation\TP\TSP-D
-
-julia
-
-include("main.jl")
-f = "doublecenter-54-n10.txt"
-#nom, pos, dist, vDrone, vCamion, nbrNode = loadLAP("doublecenter-60-n10.txt")
-nom, pos, dist, vDrone, vCamion, nbrNode = loadLAP(f)
-ip, x = setLAP(1, dist)
-ip, x = setTSP(ip, x)
-ordrePassage = ordonerPerm(x)
-#vDrone = 4.0
-tempsOp = calculToutesOperation(dist, nbrNode, vDrone, vCamion, ordrePassage)
-M, P = matriceMeilleurTemps(tempsOp, nbrNode)
-M, P = voyageSimple(ordrePassage, dist, M, P)
-A, B = plusCourtTemps(ordrePassage, M, P)
-synthèse(B, P, M, ordrePassage, vDrone, vCamion, A, f)
-
-
-=#

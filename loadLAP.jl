@@ -41,11 +41,8 @@ function loadLAP(fname)
             nom = String(nom)
             push!(noms, nom)
         end
-        #println("noms: ", noms, "   type: ", typeof(noms))
-        #println("positions: ", position, "   type: ", typeof(position))
 
     distancier = calculDistancier(position)
-    #println(distancier)
     return(noms, position, distancier, vitesseDrone, vitesseCamion, nbrNode)
 end
 
@@ -60,20 +57,3 @@ function calculDistancier(pos::Array{Tuple{Float64,Float64},1})
     end
     return(distancier)
 end
-
-    #=
-    A=zeros(Int, m, n)
-    for i=1:m
-        # lecture du nombre d'elements non nuls sur la contrainte i (non utilise)
-        readline(f)
-        # lecture des indices des elements non nuls sur la contrainte i
-        for valeur in split(readline(f))
-          j = parse(Int, valeur)
-          A[i,j]=1
-        end
-    end
-    close(f)
-    return C, A
-
-end
-=#
